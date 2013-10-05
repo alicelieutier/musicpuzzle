@@ -1,4 +1,4 @@
 musicpuzzle
 ===========
 
-HTML music game 
+HTML music game
