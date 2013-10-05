@@ -59,6 +59,7 @@
 /*    background-color: transparent;
     border: none;*/
   }
-  .credit {
+  .credits {
     font-size: 12px;
+    line-height: 15px;
   }

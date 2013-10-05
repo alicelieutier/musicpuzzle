@@ -1,4 +1,4 @@
-//globals
+//globals are bad
 var DURATION = 15;
 var GAME = {};
 
@@ -167,34 +167,6 @@ function cube(name, rank){
   return cube;
 }
 
-
-
-// helpers
-function shuffled(nb){
-  var result = [];
-  for (var i = nb - 1; i >= 0; i--) {
-    result.push(i);
-  };
-  for (var i = result.length - 1; i >= 0; i--) {
-    var rand = Math.floor(Math.random() * nb);
-    var tmp = result[i];
-    result[i] = result[rand];
-    result[rand] = tmp;
-  };
-  return result
-}
-
-function is_sorted(arr) {
-    var len = arr.length - 1;
-    for(var i = 0; i < len; ++i) {
-        if(arr[i] > arr[i+1]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-
 // return a function that gives back the position in which the track should
 // be at a certain time, depending on the order.
 function position(order){
@@ -243,6 +215,7 @@ function player(callback) {
     }
 
     if (Math.abs(norm - current) > 100) {
+      // we need the +100 otherwise firefox lags behind
       GAME.sound.currentTime = (pos(Date.now() - start) + 100) / 1000;
     }
 
@@ -254,6 +227,31 @@ function player(callback) {
     window.setTimeout(loop, 150);
 
   })();
+}
+
+// helpers
+function shuffled(nb){
+  var result = [];
+  for (var i = nb - 1; i >= 0; i--) {
+    result.push(i);
+  };
+  for (var i = result.length - 1; i >= 0; i--) {
+    var rand = Math.floor(Math.random() * nb);
+    var tmp = result[i];
+    result[i] = result[rand];
+    result[rand] = tmp;
+  };
+  return result
+}
+
+function is_sorted(arr) {
+    var len = arr.length - 1;
+    for(var i = 0; i < len; ++i) {
+        if(arr[i] > arr[i+1]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 // get the artist to start the game
