@@ -16,7 +16,6 @@ GAME.currentLevel = 0;
 //functions
 function search(event){
   var name = this.q.value;
-  console.log(name)
   DZ.api('/search?q=' + name, setupLevels);
   event.preventDefault();
   return false;
@@ -184,13 +183,12 @@ function player(callback) {
   GAME.stop = false;
   // set the pos calculator
   var pos = position(GAME.order);
-  // set systemTime
-  var start = Date.now() - GAME.state;
+  var start, startPlaying, loop;
 
   GAME.sound.currentTime = pos(0) / 1000;
   GAME.sound.play();
 
-  (function loop() {
+  loop = function () {
     // check the position where it should be
     var norm = pos(Date.now() - start);
     var current = GAME.sound.currentTime * 1000;
@@ -214,19 +212,29 @@ function player(callback) {
       return;
     }
 
+    // console.log(Math.abs(norm - current));
     if (Math.abs(norm - current) > 100) {
       // we need the +100 otherwise firefox lags behind
-      GAME.sound.currentTime = (pos(Date.now() - start) + 100) / 1000;
+      GAME.sound.currentTime = (norm + 100) / 1000;
     }
 
-
     GAME.state = Date.now() - start;
+
     var progress = 100 * (Date.now() - start) / (DURATION * 1000);
     GAME.board.style.background = '-webkit-linear-gradient(left, red ' + progress + '%, #999 ' + progress + '%)';
     GAME.board.style.backgroundImage = 'linear-gradient(to right, red ' + progress + '%, #999 ' + progress + '%)';
     window.setTimeout(loop, 150);
 
-  })();
+  }
+
+  startPlaying = function () {
+    // set systemTime
+    start = Date.now() - GAME.state;
+    GAME.sound.removeEventListener('playing', startPlaying);
+    loop();
+  }
+
+  GAME.sound.addEventListener('playing', startPlaying);
 }
 
 // helpers
