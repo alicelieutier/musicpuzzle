@@ -143,6 +143,13 @@ function win_sequence(){
 
 function listen(){
   // console.log('listen');
+  if (GAME.sound.buffered.end(0) < DURATION) {
+    GAME.sound.addEventListener('suspend', listen);
+    GAME.sound.addEventListener('stalled', function(){
+      alert('Network error while loading music');
+    });
+    return;
+  }
   music();
   //get the order
   GAME.order = [];
