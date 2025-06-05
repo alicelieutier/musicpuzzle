@@ -24,7 +24,7 @@ function search(event){
 function setupLevels(resp) {
   var data = resp.data;
   if (!data || data.length < 6) {
-    alert("Not enough relults, Try again with an other artist");
+    alert("Not enough results, Try again with another artist.");
     return;
   }
   GAME.levels = [];
@@ -73,13 +73,11 @@ function setup(config){
   GAME.listen.addEventListener('click', listen);
 
   document.getElementById('pause').addEventListener('click', function(){
-    // console.log('pause');
     GAME.sound.pause();
     GAME.pause = true;
   });
 
   document.getElementById('stop').addEventListener('click', function(){
-    // console.log('stop');
     GAME.sound.pause();
     GAME.stop = true;
     GAME.board.style.background = '#999';
@@ -219,10 +217,10 @@ function player(callback) {
       return;
     }
 
-    // console.log(Math.abs(norm - current));
-    if (Math.abs(norm - current) > 100) {
-      // we need the +100 otherwise firefox lags behind
-      GAME.sound.currentTime = (norm + 100) / 1000;
+    // don't lower the 250 too much otherwise the sound "skips"
+    if (Math.abs(norm - current) > 250) {
+      // we need the +120 otherwise firefox lags behind..
+      GAME.sound.currentTime = (norm + 120) / 1000;
     }
 
     GAME.state = Date.now() - start;
