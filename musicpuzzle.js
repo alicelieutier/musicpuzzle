@@ -80,7 +80,7 @@ function setup(config){
   document.getElementById('stop').addEventListener('click', function(){
     GAME.sound.pause();
     GAME.stop = true;
-    GAME.board.style.background = '#999';
+    GAME.board.style.background = '#f0ff20';
     GAME.state = 0;
     window.setTimeout(function(){
       GAME.stop = false;
@@ -99,7 +99,7 @@ function game(){
   document.getElementById('stop').disabled = true;
 
   $('#board').sortable("enable");
-  GAME.board.style.background = '#999';
+  GAME.board.style.background = '#f0ff20';
 
 
   GAME.stop = false;
@@ -135,7 +135,7 @@ function win_sequence(){
         GAME.board.classList.remove('winner');
         game();
       }
-    }, 1200);
+    }, 1500);
   });
 }
 
@@ -226,8 +226,8 @@ function player(callback) {
     GAME.state = Date.now() - start;
 
     var progress = 100 * (Date.now() - start) / (DURATION * 1000);
-    GAME.board.style.background = '-webkit-linear-gradient(left, red ' + progress + '%, #999 ' + progress + '%)';
-    GAME.board.style.backgroundImage = 'linear-gradient(to right, red ' + progress + '%, #999 ' + progress + '%)';
+    GAME.board.style.background = '-webkit-linear-gradient(left, red ' + progress + '%, #f0ff20 ' + progress + '%)';
+    GAME.board.style.backgroundImage = 'linear-gradient(to right, red ' + progress + '%, #f0ff20 ' + progress + '%)';
     window.setTimeout(loop, 150);
 
   }
